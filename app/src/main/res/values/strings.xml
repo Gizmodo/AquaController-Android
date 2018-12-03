@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Aqua</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_temperature">Температура</string>
+    <string name="title_led">Свет</string>
+    <string name="title_doser">УДО</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

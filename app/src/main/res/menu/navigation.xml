@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_temperature"
+        android:icon="@drawable/ic_thermometer_temperature_control_tool_svgrepo_com"
+        android:title="@string/title_temperature" />
+
+    <item
+        android:id="@+id/navigation_led"
+        android:icon="@drawable/ic_lightbulb_outline_black_24dp"
+        android:title="@string/title_led" />
+
+    <item
+        android:id="@+id/navigation_doser"
+        android:icon="@drawable/ic_doser_skin_svgrepo_com"
+        android:title="@string/title_doser" />
+
+</menu>
