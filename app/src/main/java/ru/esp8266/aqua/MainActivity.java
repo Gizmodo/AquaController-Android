@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_led:
+                    fragment = new LampFragment();
+                    loadFragment(fragment);
                     return true;
                 case R.id.navigation_doser:
                     return true;
