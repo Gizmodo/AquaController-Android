@@ -14,4 +14,12 @@
     <string name="lamp_state">Состояние:</string>
     <string name="lamp_enabled">Доступность:</string>
     <string name="lamp_edit">Изменить</string>
+    <string name="temperature">Temperature</string>
+    <string name="led">Led</string>
+    <string name="udo">UDO</string>
+    <string name="refresh">Refresh</string>
+    <string name="exit">Exit</string>
+    <string name="options">Options</string>
+    <string name="heater">Heater</string>
+    <string name="log">Log</string>
 </resources>

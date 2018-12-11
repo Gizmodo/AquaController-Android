@@ -1,67 +1,52 @@
 package ru.esp8266.aqua;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
-import com.google.android.gms.common.internal.service.Common;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
-
-import java.util.Map;
+import ru.esp8266.aqua.Screen.LampActivity;
+import ru.esp8266.aqua.Screen.TemperatureActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class
             .getSimpleName();
+    ImageView btn_temperature, btn_lamp, btn_settings, btn_exit, btn_heater, btn_refresh, btn_udo, btn_log;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initUI();
+        initButtonListeners();
+    }
 
-
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(menuItem -> {
-            Fragment fragment;
-            switch (menuItem.getItemId()) {
-                case R.id.navigation_temperature:
-                    fragment = new TempFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_led:
-                    fragment = new LampFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_doser:
-                    return true;
-            }
-            return false;
+    private void initButtonListeners() {
+        btn_temperature.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TemperatureActivity.class);
+            startActivity(intent);
+            finish();
         });
-        loadFragment(new TempFragment());
+        btn_lamp.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, LampActivity.class);
+            startActivity(intent);
+
+        });
+
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void initUI() {
+        btn_temperature = findViewById(R.id.btn_temperature);
+        btn_lamp = findViewById(R.id.btn_lamp);
+        btn_udo = findViewById(R.id.btn_udo);
+        btn_refresh = findViewById(R.id.btn_refresh);
+        btn_log = findViewById(R.id.btn_log);
+        btn_heater = findViewById(R.id.btn_heater);
+        btn_settings = findViewById(R.id.btn_settings);
+        btn_exit = findViewById(R.id.btn_exit);
     }
+
+
 }
