@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import ru.esp8266.aqua.Model.LampItem;
 import ru.esp8266.aqua.ViewHolder.LampViewHolder;
 
 
@@ -56,7 +57,7 @@ public class LampFragment extends Fragment {
     }
 
     ValueEventListener valueEventListener;
-    private static final String TAG = "TempFragment";
+    private static final String TAG = "1";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -133,7 +133,7 @@
         app:srcCompat="@drawable/ic_cogwheel" />
 
     <ImageButton
-        android:id="@+id/btn_exit"
+        android:id="@+id/btn_ntp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -146,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/gl_vertical"
         app:layout_constraintTop_toTopOf="@+id/gl_75"
-        app:srcCompat="@drawable/ic_power_button" />
+        app:srcCompat="@drawable/ic_time_passing" />
 
     <ImageButton
         android:id="@+id/btn_temperature"

@@ -1,4 +1,4 @@
-package ru.esp8266.aqua;
+package ru.esp8266.aqua.Model;
 
 public class LampItem {
     private Boolean Enabled;

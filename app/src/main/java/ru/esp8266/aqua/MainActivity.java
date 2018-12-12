@@ -6,14 +6,19 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ru.esp8266.aqua.Screen.HeaterActivity;
 import ru.esp8266.aqua.Screen.LampActivity;
+import ru.esp8266.aqua.Screen.LogActivity;
+import ru.esp8266.aqua.Screen.NTPActivity;
+import ru.esp8266.aqua.Screen.SettingsActivity;
 import ru.esp8266.aqua.Screen.TemperatureActivity;
+import ru.esp8266.aqua.Screen.UDOActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class
             .getSimpleName();
-    ImageView btn_temperature, btn_lamp, btn_settings, btn_exit, btn_heater, btn_refresh, btn_udo, btn_log;
+    ImageView btn_temperature, btn_lamp, btn_settings, btn_ntp, btn_heater, btn_refresh, btn_udo, btn_log;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,31 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+        btn_udo.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, UDOActivity.class);
+            startActivity(intent);
 
+        });
+        btn_log.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, LogActivity.class);
+            startActivity(intent);
+
+        });
+        btn_heater.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HeaterActivity.class);
+            startActivity(intent);
+
+        });
+        btn_settings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+
+        });
+        btn_ntp.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NTPActivity.class);
+            startActivity(intent);
+
+        });
     }
 
     private void initUI() {
@@ -45,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         btn_log = findViewById(R.id.btn_log);
         btn_heater = findViewById(R.id.btn_heater);
         btn_settings = findViewById(R.id.btn_settings);
-        btn_exit = findViewById(R.id.btn_exit);
+        btn_ntp = findViewById(R.id.btn_ntp);
     }
 
 

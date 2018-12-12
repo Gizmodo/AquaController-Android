@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Screen.TemperatureActivity"></activity>
+        <activity android:name=".Screen.LampDetailActivity"></activity>
+        <activity android:name=".Screen.NTPActivity" />
+        <activity android:name=".Screen.SettingsActivity" />
+        <activity android:name=".Screen.HeaterActivity" />
+        <activity android:name=".Screen.LogActivity" />
+        <activity android:name=".Screen.UDOActivity" />
+        <activity android:name=".Screen.TemperatureActivity" />
         <activity android:name=".Screen.LampActivity" />
         <activity
             android:name=".MainActivity"
