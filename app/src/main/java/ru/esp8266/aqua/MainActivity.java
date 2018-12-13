@@ -3,8 +3,12 @@ package ru.esp8266.aqua;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ru.esp8266.aqua.Screen.HeaterActivity;
 import ru.esp8266.aqua.Screen.LampActivity;
@@ -64,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+        btn_refresh.setOnClickListener(v -> {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference RefUpdate = database.getReference("UpdateSettings");
+            RefUpdate.setValue(true);
+            Toast.makeText(this, "Выполнен запрос на обновление настроек", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     private void initUI() {
