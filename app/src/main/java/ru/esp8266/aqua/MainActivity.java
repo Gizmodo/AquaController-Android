@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import ru.esp8266.aqua.Screen.HeaterActivity;
 import ru.esp8266.aqua.Screen.LampActivity;
 import ru.esp8266.aqua.Screen.LogActivity;
-import ru.esp8266.aqua.Screen.NTPActivity;
 import ru.esp8266.aqua.Screen.SettingsActivity;
 import ru.esp8266.aqua.Screen.TemperatureActivity;
 import ru.esp8266.aqua.Screen.UDOActivity;
@@ -64,9 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
         btn_ntp.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, NTPActivity.class);
-            startActivity(intent);
-
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference RefNTP = database.getReference("TimeSync");
+            RefNTP.setValue(true);
+            Toast.makeText(this, "Выполнен запрос синхронизацию времени", Toast.LENGTH_SHORT).show();
         });
         btn_refresh.setOnClickListener(v -> {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();

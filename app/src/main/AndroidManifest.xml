@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Screen.LampDetailActivity"></activity>
-        <activity android:name=".Screen.NTPActivity" />
         <activity android:name=".Screen.SettingsActivity" />
         <activity android:name=".Screen.HeaterActivity" />
         <activity android:name=".Screen.LogActivity" />
