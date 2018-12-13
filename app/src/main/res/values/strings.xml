@@ -24,4 +24,7 @@
     <string name="log">Log</string>
     <string name="lamp_on_from">Включена с</string>
     <string name="lamp_on_to">до</string>
+    <string name="off">ВЫКЛ</string>
+    <string name="on">ВКЛ</string>
+    <string name="save">Сохранить</string>
 </resources>
