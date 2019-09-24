@@ -42,8 +42,8 @@ public class TemperatureActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                txt_temperature_first.setText(Objects.requireNonNull(Objects.requireNonNull(map).get("Device1")).toString()+" °C");
-                txt_temperature_second.setText(Objects.requireNonNull(map.get("Device2")).toString()+" °C");
+                txt_temperature_first.setText(Objects.requireNonNull(Objects.requireNonNull(map).get("temp1")).toString()+" °C");
+                txt_temperature_second.setText(Objects.requireNonNull(map.get("temp2")).toString()+" °C");
                 txt_temperature_datetime.setText(Objects.requireNonNull(map.get("DateTime")).toString());
                 Log.d(TAG, "onDataChange: " + map);
             }

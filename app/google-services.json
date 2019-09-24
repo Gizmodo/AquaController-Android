@@ -1,55 +1,53 @@
 {
   "project_info": {
-    "project_number": "598249812474",
-    "firebase_url": "https://stockmon-f11c3.firebaseio.com",
-    "project_id": "stockmon-f11c3",
-    "storage_bucket": "stockmon-f11c3.appspot.com"
+    "project_number": "398365853398",
+    "firebase_url": "https://aqua-3006a.firebaseio.com",
+    "project_id": "aqua-3006a",
+    "storage_bucket": "aqua-3006a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:598249812474:android:bfaa6d718d284110",
+        "mobilesdk_app_id": "1:398365853398:android:2eceefc8abc2ecf6cb2b77",
         "android_client_info": {
           "package_name": "ru.esp8266.aqua"
         }
       },
       "oauth_client": [
         {
-          "client_id": "598249812474-c1efma41p6b3l5njek5baejba2qmp0qq.apps.googleusercontent.com",
+          "client_id": "398365853398-6rp9icv1vjhjvat9j3sjar0nsr50o1tj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ru.esp8266.aqua",
-            "certificate_hash": "bb827864815e26031f6d84996c031161ea0b1d87"
+            "certificate_hash": "18164d463e7c7a2ccd3370267df39024348736bb"
           }
         },
         {
-          "client_id": "598249812474-mm2p6itda0m7984srquu4d6ourd3o5l2.apps.googleusercontent.com",
+          "client_id": "398365853398-nuvblmoacf1qcuufv44iau3umdhtcvh1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.esp8266.aqua",
+            "certificate_hash": "d5574ff0800ae2580983542861074c213c44fb57"
+          }
+        },
+        {
+          "client_id": "398365853398-kgh05taf5nfkrckcee9c7t07d6ebsk8l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDKBAWgE86lgmRJ4U--DF7nM000nfZ1TBg"
-        },
-        {
-          "current_key": "AIzaSyDxb9N-NYVgOxMiamfbZGtHlqsr-2yEj0s"
+          "current_key": "AIzaSyD7yowETFM5f-21Fklyx50qBATcoCe0XD8"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "598249812474-mm2p6itda0m7984srquu4d6ourd3o5l2.apps.googleusercontent.com",
+              "client_id": "398365853398-kgh05taf5nfkrckcee9c7t07d6ebsk8l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
