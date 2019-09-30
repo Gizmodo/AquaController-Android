@@ -92,7 +92,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/log"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/gl_75"
         app:layout_constraintEnd_toStartOf="@+id/gl_vertical"
         app:layout_constraintStart_toStartOf="parent"

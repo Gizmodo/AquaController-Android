@@ -1,17 +1,21 @@
 package ru.esp8266.aqua.Screen;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,11 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ru.esp8266.aqua.Adapter.BootAdapter;
+import ru.esp8266.aqua.MainActivity;
 import ru.esp8266.aqua.R;
+import ru.esp8266.aqua.ViewHolder.BootVH;
 
 public class LogActivity extends AppCompatActivity {
     private DatabaseReference RefLastOnline;
@@ -31,92 +33,24 @@ public class LogActivity extends AppCompatActivity {
     private DatabaseReference RefBootHistory;
     private TextView txtLastOnline, txtUptime;
     private RecyclerView rvBootHistory;
-    private ValueEventListener valueEventListener;
+    private ValueEventListener lastOnlineValueEventListener, uptimeValueEventListener, bootHistoryValueEventListener;
     private static final String TAG = "LogActivity";
-    final int ITEM_LOAD_COUNT = 21;
-    int total_item = 0, last_visible_item;
-    BootAdapter adapter;
-    boolean isLoading = false, isMaxData = false;
-    String last_node = "", last_key = "";
-    private LinearLayoutManager layoutManager;
+    private FirebaseRecyclerAdapter<String, BootVH> mBootAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
-        layoutManager = new LinearLayoutManager(this);
         initUI();
         initFirebase();
-        getItems();
-
-        rvBootHistory.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                total_item = layoutManager.getItemCount();
-                last_visible_item = layoutManager.findLastVisibleItemPosition();
-
-                if (!isLoading && total_item <= (last_visible_item + ITEM_LOAD_COUNT)) {
-                    getItems();
-                    isLoading = true;
-                }
-            }
-        });
     }
 
-    private void getItems() {
-        if (!isMaxData) {
-            Query query;
-            if (TextUtils.isEmpty(last_node)) {
-                query = FirebaseDatabase.getInstance().getReference("BootHistory")
-                      //  .child("BootHistory")
-                        .orderByKey()
-                        .limitToFirst(ITEM_LOAD_COUNT);
-            } else {
-                query = FirebaseDatabase.getInstance().getReference("BootHistory")
-                       // .child()
-                        .orderByKey()
-                        .startAt(last_node)
-                        .limitToFirst(ITEM_LOAD_COUNT);
-            }
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChildren()) {
-                        List<String> newBootItems = new ArrayList<>();
-                        for (DataSnapshot bootItemsSnapshot : dataSnapshot.getChildren()) {
-                            newBootItems.add(bootItemsSnapshot.getValue(String.class));
-                        }
-
-                        last_node = newBootItems.get(newBootItems.size() - 1);
-
-                        if (!last_node.equals(last_key)) {
-                            newBootItems.remove(newBootItems.size() - 1);
-                        } else {
-                            last_node = "end";
-                        }
-
-                        adapter.addAll(newBootItems);
-                        isLoading = false;
-                    } else {
-                        isLoading = false;
-                        isMaxData = true;
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    isLoading = false;
-                }
-            });
-        }
-    }
 
     private void initFirebase() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         RefLastOnline = database.getReference("LastOnline");
-        valueEventListener = RefLastOnline.addValueEventListener(new ValueEventListener() {
+        lastOnlineValueEventListener = RefLastOnline.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 txtLastOnline.setText(dataSnapshot.getValue().toString());
@@ -129,7 +63,7 @@ public class LogActivity extends AppCompatActivity {
         });
 
         RefUptime = database.getReference("Uptime");
-        valueEventListener = RefUptime.addValueEventListener(new ValueEventListener() {
+        uptimeValueEventListener = RefUptime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 txtUptime.setText(dataSnapshot.getValue().toString());
@@ -141,21 +75,36 @@ public class LogActivity extends AppCompatActivity {
             }
         });
 
-        Query getLastKey = FirebaseDatabase.getInstance().getReference("BootHistory")
-               // .child("BootHistory")
-                .orderByKey()
-                .limitToLast(1);
-        getLastKey.addListenerForSingleValueEvent(new ValueEventListener() {
+        RefBootHistory = database.getReference("BootHistory");
+        bootHistoryValueEventListener = RefBootHistory.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot lastKey : dataSnapshot.getChildren()) {
-                    last_key = lastKey.getKey();
-                }
+                Query query = RefBootHistory.orderByKey();
+                FirebaseRecyclerOptions<String> listOptions =
+                        new FirebaseRecyclerOptions.Builder<String>()
+                                .setQuery(query, String.class)
+                                .build();
+                mBootAdapter = new FirebaseRecyclerAdapter<String, BootVH>(listOptions) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull BootVH holder, int i, @NonNull String s) {
+                        holder.boot_text.setText(s);
+                    }
+
+                    @NonNull
+                    @Override
+                    public BootVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View itemView = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.boot_item_layout, parent, false);
+                        return new BootVH(itemView);
+                    }
+                };
+                mBootAdapter.startListening();
+                rvBootHistory.setAdapter(mBootAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(LogActivity.this, "Cannot get last key", Toast.LENGTH_SHORT).show();
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
     }
@@ -163,13 +112,56 @@ public class LogActivity extends AppCompatActivity {
     private void initUI() {
         txtLastOnline = findViewById(R.id.txtLastOnline);
         txtUptime = findViewById(R.id.txtUptime);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+
         rvBootHistory = findViewById(R.id.rvBootHistory);
-
+        rvBootHistory.setHasFixedSize(true);
         rvBootHistory.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvBootHistory.getContext(), layoutManager.getOrientation());
-        rvBootHistory.addItemDecoration(dividerItemDecoration);
-
-        adapter = new BootAdapter(this);
-        rvBootHistory.setAdapter(adapter);
+        RecyclerView.ItemAnimator animator = rvBootHistory.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
     }
+
+    private void removeListeners() {
+        RefBootHistory.removeEventListener(bootHistoryValueEventListener);
+        RefLastOnline.removeEventListener(lastOnlineValueEventListener);
+        RefUptime.removeEventListener(uptimeValueEventListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mBootAdapter != null) {
+            mBootAdapter.stopListening();
+        }
+        removeListeners();
+        finish();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(LogActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBootAdapter != null) {
+            mBootAdapter.startListening();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        removeListeners();
+        super.onStop();
+    }
+
 }
