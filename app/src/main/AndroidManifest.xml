@@ -11,15 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Screen.LampDetailActivity"></activity>
+        <activity
+            android:name=".Screen.LampDetailActivity"
+            android:configChanges="orientation|screenSize"></activity>
         <activity android:name=".Screen.SettingsActivity" />
         <activity android:name=".Screen.HeaterActivity" />
-        <activity android:name=".Screen.LogActivity" />
+        <activity
+            android:name=".Screen.LogActivity"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".Screen.UDOActivity" />
         <activity android:name=".Screen.TemperatureActivity" />
-        <activity android:name=".Screen.LampActivity" />
+        <activity
+            android:name=".Screen.LampActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
